@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Content</title>
+</head>
+<body>
+    <div>
+        <label for="message-input">Enter Message:</label>
+        <input type="text" id="message-input">
+        <button onclick="generateAndDisplayContent()">Generate Content</button>
+    </div>
+  
+    
+    <div id="generated-content"></div>
+    
+    <script>
+        async function generateAndDisplayContent() {
+            const messageInput = document.getElementById('message-input').value;
+    
+            try {
+                const response = await fetch('/generate-content', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ messageInput })
+                });
+    
+                const data = await response.json();
+                const generatedContent = data.generatedContent;
+    
+                document.getElementById('generated-content').textContent = generatedContent;
+            } catch (error) {
+                console.error('Error generating and displaying content:', error);
+            }
+        }
+    </script>
+</body>
+</html>
